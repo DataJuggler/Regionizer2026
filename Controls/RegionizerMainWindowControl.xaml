@@ -1,0 +1,279 @@
+﻿<UserControl xmlns:my="clr-namespace:DataJuggler.Regionizer.Controls"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Controls="clr-namespace:DataJuggler.WPF.Controls;assembly=DataJuggler.WPF.Controls"  
+             x:Class="DataJuggler.Regionizer.Controls.RegionizerMainWindowControl"
+             VerticalAlignment="Top"
+             BorderBrush="{x:Null}"             
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="760">
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle"
+               TargetType="{x:Type FrameworkElement}">
+            <Setter Property="Margin"
+                    Value="8,4,8,6" />
+        </Style>
+        <Style TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ContentStyle}" />
+        <Style TargetType="{x:Type ComboBox}"
+               BasedOn="{StaticResource ContentStyle}" />
+        <Style TargetType="{x:Type Label}"
+               BasedOn="{StaticResource ContentStyle}">
+            <Setter Property="Margin"
+                    Value="8,8,8,1" />
+        </Style>
+        <Style TargetType="{x:Type TextBox}"
+               BasedOn="{StaticResource ContentStyle}">
+            <Setter Property="Margin"
+                    Value="8,1,8,8" />
+        </Style>
+        <Style x:Key="HandCursorButtonStyle" TargetType="Button" BasedOn="{StaticResource ContentStyle}">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="{x:Type Control}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        </Style>
+    </UserControl.Resources>
+    <UserControl.Background>
+        <SolidColorBrush Color="White" />
+    </UserControl.Background>
+    <StackPanel Margin="0,0,23,0">
+        <Label x:Name="TitleLabel"
+               Content="Regionizer 2026 Version 4.0.1"
+               FontFamily="Calibri"
+               FontSize="24"
+               FontWeight="Bold" />
+        <WrapPanel>
+            <Button x:Name="FormatDocumentButton"
+                Click="FormatDocumentButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+                Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                ToolTip="Format the Current C# Document." >
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/FormatDocument.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/FormatDocument.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="FormatSelectionButton"
+                Click="FormatSelectionButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+                Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                ToolTip="Format the selected property, method or event." >
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/FormatSelection.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/FormatSelection.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="CreatePropertiesButton"
+                Click="CreateProperties_Click" Style="{StaticResource HandCursorButtonStyle}"
+                Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                    FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                    ToolTip="Create Properties For The Selected Private Variables">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/CreateProperties.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/CreateProperties.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="CreateHasPropertiesButton"
+                Click="HasPropertyCreator_Click" Style="{StaticResource HandCursorButtonStyle}"
+                Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                ToolTip="Create a test for null for the selected object name. Example object name Person - HasPerson">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/HasPropertyButton.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/HasPropertyButton.png" />
+                </Button.Background>
+            </Button>
+        </WrapPanel>
+        <Label x:Name="Add"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Content="Add"
+               FontWeight="Bold" FontSize="16" Height="32"
+               Foreground="Black" Margin="8,0,0,0" />
+        <ComboBox x:Name="CodeTypeComboBox"
+                  ItemsSource="{Binding}" FontSize="16" Height="40"
+                  SelectionChanged="CodeTypeComboBox_SelectionChanged"
+                  TabIndex="2" RenderTransformOrigin="0.5,0.5" >
+            <ComboBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="2.203"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0.462"/>
+                </TransformGroup>
+            </ComboBox.RenderTransform>
+        </ComboBox>
+        <Label x:Name="NameLabel" Height="32
+               "
+               Content="Name:" FontSize="16"
+               FontWeight="Bold"
+               Foreground="Black" />
+        <TextBox x:Name="NameTextBox" FontSize="16"
+                 TabIndex="3" Height="32" />
+        <Label x:Name="ReturnTypeLabel" FontSize="16"
+               Content="Return Type:"
+               FontWeight="Bold"
+               Foreground="Black" />
+        <TextBox x:Name="ReturnTypeTextBox" TextAlignment="Left"
+                 TabIndex="4" FontSize="16" Height="32"
+                 Text="string" />
+        <WrapPanel>
+            <Button x:Name="AddButton"
+                Click="AddButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+                Width="64" Height="64"
+                TabIndex="5" BorderThickness="0"
+                ToolTip="Insert Code Elements." FontSize="16" FontFamily="Trebuchet MS" FontWeight="Bold">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/AddButton.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/AddButton.png" />
+                </Button.Background>
+            </Button>
+            <Label x:Name="InfoLabel"
+                Content="" VerticalAlignment="Center"
+                FontFamily="Calibri"
+                FontSize="20" />
+        </WrapPanel>
+        <Controls:LabelCheckBoxControl x:Name="AutoCommentCheckBox" Width="140" 
+          FontFamily="Calibri" FontSize="16"  VerticalAlignment="Center" Margin="0,12,0,8"
+       LabelText="Auto Comment" LabelWidth="140" LabelFontSize="16" LabelFontFamily="Calibri" 
+       IsChecked="False" Height="16" />
+        <WrapPanel Margin="0,8,0,12">
+            <Button x:Name="EditCommentDictionaryuButton"
+            Click="EditCommentDictionaryButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+            Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+            FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+            ToolTip="Edit the Comment Dictionary using regular expressions.">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/EditCommentDictionary.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/EditCommentDictionary.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="EditCustomDictionaryuButton"
+                 Click="EditCustomDictionaryButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+                 Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                 FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                 ToolTip="Edit your own custom comment dictionary using regular expressions">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/EditCustomDictonary.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/EditCustomDictonary.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="XMLReserveWordHelperButton"
+             Click="XMLReserveWordHelperButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+             Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+             FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+             ToolTip="Launch the XML Reserved Word Helper to replace XML reserved words with special characters.">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/XMLReservedWordHelper.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/XMLReservedWordHelper.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="SetupCommentDictionaryButton"
+                 Click="SetupCommentDictionaryButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+                 Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                 FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                 ToolTip="Setup the path to the comment dictionary and store the path in the registry.">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/SetupCommentDictionary.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/SetupCommentDictionary.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="HelpButton" Width="64" Height="64" BorderBrush="{x:Null}"
+                Margin="8,8,8,8"
+                Click="HelpLink_Click" MouseEnter="Button_OnMouseEnter" MouseLeave="Button_MouseLeave" ToolTip="View The Regionizer User's Guide"                     >
+                <Button.Content>
+                    <Image Source="Images/HelpIcon.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="Images/HelpIcon.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="YouTubeButton" Width="148" Height="76" BorderBrush="Black" 
+                Click="YouTubeButton_Click" MouseEnter="Button_OnMouseEnter" MouseLeave="Button_MouseLeave" 
+                    ToolTip="Watch the Regionizer Videos" Margin="8,8,8,8">
+                <Button.Content>
+                    <Image Source="Images/YouTube.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="Images/YouTube.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="LaunchBlazorButton" Width="64" Height="64" BorderBrush="{x:Null}" BorderThickness="0"
+                Click="BlazorUIBuilderButton_Click" MouseEnter="Button_OnMouseEnter" MouseLeave="Button_MouseLeave" 
+                    ToolTip="Add Blazor Componets" Margin="8,8,8,8">
+                            <Button.Content>
+                                <Image Source="Images/LaunchBlazorUI.png" />
+                            </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="Images/LaunchBlazorUI.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="IBlazorComponentButton"
+                 Click="IBlazorComponentButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+                 Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                 FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                 ToolTip="Implement the IBlazorComponent interface">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/IBlazorComponent.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/IBlazorComponent.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="IBlazorComponentParentButton"
+                 Click="IBlazorComponentParentButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+                 Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+                 FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+                 ToolTip="Implement the IBlazorComponentParent interface">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/IBlazorComponentParent.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/IBlazorComponentParent.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="WireUpBlazorComponentsButton"
+             Click="WireUpBlazorComponentsButton_Click" Style="{StaticResource HandCursorButtonStyle}"
+             Width="64" Height="64" TabIndex="0" FontSize="16" FontFamily="Trebuchet MS" 
+             FontWeight="Bold" BorderThickness="0" Margin="8,8,8,8"
+             ToolTip="Wire Up Components - It's Magic.">
+                <Button.Content>
+                    <Image Source="/DataJuggler.Regionizer.Controls;component/Images/WireUpButton2.png" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/DataJuggler.Regionizer.Controls;component/Images/WireUpButton2.png" />
+                </Button.Background>
+            </Button>
+            <Button x:Name="AddBreakpointsButton" Width="64" Height="64" BorderBrush="{x:Null}" BorderThickness="0"
+                Click="AddBreakpointsButton_Click" MouseEnter="Button_OnMouseEnter" MouseLeave="Button_MouseLeave" 
+                ToolTip="Add Breakpoints To All Methods In Active Document" Margin="8,8,8,8">
+                    <Button.Content>
+                        <Image Source="Images/BreakpointIcon.png" />
+                    </Button.Content>
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/BreakpointIcon.png" />
+                    </Button.Background>
+                </Button>   
+        </WrapPanel>
+    </StackPanel>
+</UserControl>
